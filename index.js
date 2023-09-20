@@ -2,13 +2,12 @@ require('dotenv').config()
 const Person = require('./models/person')
 const express = require('express')
 const app = express()
-const morgan = require('morgan');
+const morgan = require('morgan')
 const cors = require('cors')
-const mongoose = require('mongoose')
 
-app.use(express.json()); 
+app.use(express.json())
 app.use(cors())
-app.use(morgan('tiny'));
+app.use(morgan('tiny'))
 app.use(express.static('dist'))
 
 app.get('/api/persons', (request, response) => {
@@ -51,7 +50,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -65,7 +64,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
